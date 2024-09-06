@@ -64,3 +64,38 @@ To contribute to Webhook Handler, follow these steps:
 5. Create the pull request.
 
 Alternatively, see the GitHub documentation on [creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
+
+## Docker Setup for Local Development
+
+To build and run the project using Docker for local development:
+
+1. Ensure you have Docker installed on your machine.
+
+2. Build the Docker image:
+   ```
+   docker build -t webhook-handler .
+   ```
+
+3. Run the container:
+   ```
+   docker run -p 3000:3000 -e NODE_ENV=development -v $(pwd)/src:/app/src -d webhook-handler
+   ```
+
+   This command:
+   - Maps port 3000 from the container to your host
+   - Sets the NODE_ENV to development
+   - Mounts the local `src` directory to the container for live code updates
+
+4. To view logs:
+   ```
+   docker logs -f <container_id>
+   ```
+
+5. To stop the container:
+   ```
+   docker stop <container_id>
+   ```
+
+Replace `<container_id>` with the actual container ID, which you can get by running `docker ps`.
+
+Note: For hot-reloading in development, you may need to adjust the Dockerfile and use a tool like nodemon.
