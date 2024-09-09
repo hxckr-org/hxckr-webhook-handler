@@ -33,7 +33,7 @@ To use the Webhook Handler, follow these steps:
 
 ## Configuring the Application
 
-1. Create a `.env` by runnin `cp .env.example .env` and fill in the following values
+1. Create a `.env` by running `cp .env.example .env` and fill in the following values
 
 For development, you can use:
 ```bash
@@ -47,7 +47,7 @@ The webhook handler exposes a single endpoint:
 
 - POST `/webhook`
 
-To test the webhook handler with the git-servie:
+To test the webhook handler with the git-service:
 
 1. Head on to [hxckr-infra]() and setup git-service which also starts soft-serve.
 2. Ensure the server is running.
@@ -62,6 +62,7 @@ To contribute to Webhook Handler, follow these steps:
 3. Make your changes and commit them: `git commit -m '<commit_message>'`
 4. Push to the original branch: `git push origin <project_name>/<location>`
 5. Create the pull request.
+<<<<<<< Updated upstream
 
 Alternatively, see the GitHub documentation on [creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
@@ -99,3 +100,5 @@ To build and run the project using Docker for local development:
 Replace `<container_id>` with the actual container ID, which you can get by running `docker ps`.
 
 Note: For hot-reloading in development, you may need to adjust the Dockerfile and use a tool like nodemon.
+=======
+>>>>>>> Stashed changes
