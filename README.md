@@ -49,7 +49,7 @@ The webhook handler exposes a single endpoint:
 
 To test the webhook handler with the git-service:
 
-1. Head on to [hxckr-infra]() and setup git-service which also starts soft-serve.
+1. Head on to [hxckr-infra](https://github.com/extheoisah/hxckr-infra) and setup git-service which also starts soft-serve.
 2. Ensure the server is running.
 3. Create, clone and push to a repo on soft-serve.
 
