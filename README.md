@@ -62,7 +62,6 @@ To contribute to Webhook Handler, follow these steps:
 3. Make your changes and commit them: `git commit -m '<commit_message>'`
 4. Push to the original branch: `git push origin <project_name>/<location>`
 5. Create the pull request.
-<<<<<<< Updated upstream
 
 Alternatively, see the GitHub documentation on [creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
@@ -100,5 +99,3 @@ To build and run the project using Docker for local development:
 Replace `<container_id>` with the actual container ID, which you can get by running `docker ps`.
 
 Note: For hot-reloading in development, you may need to adjust the Dockerfile and use a tool like nodemon.
-=======
->>>>>>> Stashed changes
