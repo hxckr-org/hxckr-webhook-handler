@@ -1,5 +1,5 @@
 export interface WebhookPayload {
-  afte: string;
+  after: string;
   before: string;
   commits: Commit[];
   event: string;
