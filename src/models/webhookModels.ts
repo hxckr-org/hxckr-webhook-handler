@@ -65,3 +65,15 @@ export interface WebhookResponse {
   }>;
   timestamp: string;
 }
+
+export interface DispatchPayload {
+  type: string;
+  repoUrl: string;
+  branch: string;
+  commitSha: string;
+}
+
+export interface ServiceConfig {
+  url: string;
+  name: string;
+}
