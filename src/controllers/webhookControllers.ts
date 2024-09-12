@@ -2,16 +2,17 @@ import { Request, Response } from "express";
 import { createWebhookService } from "../services/webhookServices";
 import logger from "../utils/logger";
 import { WebhookPayload } from "../models/webhookModels";
+import config from "../config/config";
 
 const webhookService = createWebhookService([
   {
     name: "Test Runners",
-    url: process.env.TEST_RUNNER_URL || "http://localhost:3001/run-tests",
+    url: config.testRunnerUrl,
   },
-  // {
-  //   name: "Backend Core",
-  //   url: process.env.BACKEND_SERVER_URL || "http://localhost:4000/webhook",
-  // },
+  {
+    name: "Backend Core",
+    url: config.coreServiceUrl,
+  },
 ]);
 
 export async function handleWebhook(

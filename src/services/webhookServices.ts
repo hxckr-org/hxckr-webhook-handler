@@ -31,7 +31,7 @@ export const createWebhookService = (services: ServiceConfig[]) => {
       );
 
       const dispatchPayload: DispatchPayload = {
-        type: EVENT_TYPE,
+        event_type: EVENT_TYPE,
         repoUrl: repository.http_url,
         branch,
         commitSha,

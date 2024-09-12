@@ -67,7 +67,7 @@ export interface WebhookResponse {
 }
 
 export interface DispatchPayload {
-  type: string;
+  event_type: string;
   repoUrl: string;
   branch: string;
   commitSha: string;
