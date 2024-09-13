@@ -2,18 +2,8 @@ import { Request, Response } from "express";
 import { createWebhookService } from "../services/webhookServices";
 import logger from "../utils/logger";
 import { WebhookPayload } from "../models/webhookModels";
-import config from "../config/config";
 
-const webhookService = createWebhookService([
-  {
-    name: "Test Runners",
-    url: config.testRunnerUrl,
-  },
-  {
-    name: "Backend Core",
-    url: config.coreServiceUrl,
-  },
-]);
+const webhookService = createWebhookService();
 
 export async function handleWebhook(
   req: Request,
@@ -30,7 +20,7 @@ export async function handleWebhook(
 
     return res.status(200).json({
       success: true,
-      message: "Webhook processed and dispatched successfully",
+      message: "Webhook processed and published to RabbitMQ successfully",
     });
   } catch (error) {
     logger.error("Error handling webhook:", error);

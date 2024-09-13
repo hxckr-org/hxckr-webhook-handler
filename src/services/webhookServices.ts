@@ -1,22 +1,21 @@
-import axios from "axios";
 import logger from "../utils/logger";
-import {
-  WebhookPayload,
-  ServiceConfig,
-  DispatchPayload,
-} from "../models/webhookModels";
+import { WebhookPayload, DispatchPayload } from "../models/webhookModels";
 import { EVENT_TYPE } from "../utils/constants";
+import { getChannel } from "../config/rabbitmq";
+import { rabbitMQConfig } from "../config/rabbitmq";
 
-export const createWebhookService = (services: ServiceConfig[]) => {
-  const dispatchToService = async (
-    service: ServiceConfig,
-    payload: DispatchPayload,
-  ): Promise<void> => {
+export const createWebhookService = () => {
+  const publishToRabbitMQ = async (payload: DispatchPayload): Promise<void> => {
     try {
-      await axios.post(service.url, payload);
-      logger.info(`Successfully dispatched to ${service.name}`);
+      const channel = getChannel();
+      channel.publish(
+        rabbitMQConfig.exchange,
+        rabbitMQConfig.routingKey,
+        Buffer.from(JSON.stringify(payload)),
+      );
+      logger.info(`Successfully published to RabbitMQ`);
     } catch (error) {
-      logger.error(`Error dispatching to ${service.name}:`, error);
+      logger.error(`Error publishing to RabbitMQ:`, error);
       throw error;
     }
   };
@@ -37,14 +36,10 @@ export const createWebhookService = (services: ServiceConfig[]) => {
         commitSha,
       };
 
-      // Dispatch to all configured services
-      await Promise.all(
-        services.map((service) => dispatchToService(service, dispatchPayload)),
-      );
+      // Publish to RabbitMQ
+      await publishToRabbitMQ(dispatchPayload);
 
-      logger.info(
-        "Webhook processed and dispatched to all services successfully",
-      );
+      logger.info("Webhook processed and published to RabbitMQ successfully");
     } catch (error) {
       logger.error("Error processing webhook:", error);
       throw error;
