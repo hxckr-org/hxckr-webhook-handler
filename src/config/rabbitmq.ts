@@ -1,4 +1,5 @@
 import amqp from "amqplib";
+import logger from "../utils/logger";
 
 export const rabbitMQConfig = {
   url: process.env.RABBITMQ_URL || "amqp://guest:guest@localhost:5672",
@@ -37,15 +38,26 @@ export async function setupRabbitMQ() {
       rabbitMQConfig.routingKey,
     );
 
-    console.log("RabbitMQ setup completed");
-  } catch (error) {
-    console.error("Error setting up RabbitMQ:", error);
-    throw error;
+    logger.info("RabbitMQ setup completed");
+  } catch (error: unknown) {
+    logger.error("Error setting up RabbitMQ:", error);
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (closeError: unknown) {
+        logger.error("Error closing RabbitMQ connection:", closeError);
+      }
+    }
+    throw new Error(
+      `Failed to setup RabbitMQ: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 }
 
+// using this to make sure rabbit is properly set up befre use in the server.
 export function getChannel(): amqp.Channel {
   if (!channel) {
+    logger.error("Attempting to access uninitialized RabbitMQ channel");
     throw new Error("RabbitMQ channel not initialized");
   }
   return channel;
