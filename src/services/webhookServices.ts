@@ -8,6 +8,9 @@ export const createWebhookService = () => {
   const publishToRabbitMQ = async (payload: DispatchPayload): Promise<void> => {
     try {
       const channel = getChannel();
+      if (!channel) {
+        throw new Error('Failed to get a valid RabbitMQ channel');
+      }
       channel.publish(
         rabbitMQConfig.exchange,
         rabbitMQConfig.routingKey,
