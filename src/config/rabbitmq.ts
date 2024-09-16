@@ -41,7 +41,7 @@ export async function setupRabbitMQ() {
     logger.info("RabbitMQ setup completed");
   } catch (error: unknown) {
     logger.error("Error setting up RabbitMQ:", error);
-await cleanupRabbitMQ();
+    await cleanupRabbitMQ();
     throw new Error(
       `Failed to setup RabbitMQ: ${error instanceof Error ? error.message : String(error)}`,
     );
@@ -67,7 +67,7 @@ async function cleanupRabbitMQ() {
   }
 }
 
-// using this to make sure rabbit is properly set up befre use in the server.
+// using this to make sure rabbit is properly set up before use in the server.
 export function getChannel(): amqp.Channel {
   if (!channel) {
     logger.error("Attempting to access uninitialized RabbitMQ channel");
