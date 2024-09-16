@@ -41,16 +41,29 @@ export async function setupRabbitMQ() {
     logger.info("RabbitMQ setup completed");
   } catch (error: unknown) {
     logger.error("Error setting up RabbitMQ:", error);
-    if (connection) {
-      try {
-        await connection.close();
-      } catch (closeError: unknown) {
-        logger.error("Error closing RabbitMQ connection:", closeError);
-      }
-    }
+await cleanupRabbitMQ();
     throw new Error(
       `Failed to setup RabbitMQ: ${error instanceof Error ? error.message : String(error)}`,
     );
+  }
+}
+
+async function cleanupRabbitMQ() {
+  if (channel) {
+    try {
+      await channel.close();
+    } catch (closeError: unknown) {
+      logger.error("Error closing RabbitMQ channel:", closeError);
+    }
+    channel = null;
+  }
+  if (connection) {
+    try {
+      await connection.close();
+    } catch (closeError: unknown) {
+      logger.error("Error closing RabbitMQ connection:", closeError);
+    }
+    connection = null;
   }
 }
 
