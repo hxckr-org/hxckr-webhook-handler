@@ -13,7 +13,7 @@ This is a webhook handler for hxckr platform built with Node.js and Express. It'
 
 Before you begin, ensure you have:
 
-- You have installed Node.js and Yan
+- You have installed Node.js and Yarn
 - Typescipt
 
 ## Installing Webhook Handler
@@ -21,24 +21,28 @@ Before you begin, ensure you have:
 To use the Webhook Handler, follow these steps:
 
 1. Clone the repository:
+
    ```bash
-   git clone https://github.com/yourusername/webhook-handler.git
+   git clone https://github.com/extheoisah/hxckr-webhook-handler.git
    cd webhook-handler
    ```
 
 2. Install the dependencies:
+
    ```bash
-   npm install
+   yarn install
    ```
 
 ## Configuring the Application
 
-1. Create a `.env` by running `cp .env.example .env` and fill in the following values
+Create a `.env` by running `cp .env.example .env` and fill in the following values
 
 For development, you can use:
+
 ```bash
 yarn dev
 ```
+
 This will start the server on watch mode and restart the server on file changes.
 
 ## Using Webhook Handler
@@ -72,12 +76,14 @@ To build and run the project using Docker for local development:
 1. Ensure you have Docker installed on your machine.
 
 2. Build the Docker image:
-   ```
+
+   ```bash
    docker build -t webhook-handler .
    ```
 
 3. Run the container:
-   ```
+
+   ```bash
    docker run -p 3000:3000 -e NODE_ENV=development -v $(pwd)/src:/app/src -d webhook-handler
    ```
 
@@ -87,12 +93,14 @@ To build and run the project using Docker for local development:
    - Mounts the local `src` directory to the container for live code updates
 
 4. To view logs:
-   ```
+
+   ```bash
    docker logs -f <container_id>
    ```
 
 5. To stop the container:
-   ```
+
+   ```bash
    docker stop <container_id>
    ```
 
