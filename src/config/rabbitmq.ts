@@ -2,7 +2,10 @@ import amqp from "amqplib";
 import logger from "../utils/logger";
 
 export const rabbitMQConfig = {
-  url: process.env.RABBITMQ_URL || "amqp://guest:guest@localhost:5672",
+  hostname: process.env.RABBITMQ_HOST || "localhost",
+  port: Number(process.env.RABBITMQ_PORT) || 5672,
+  username: process.env.RABBITMQ_USERNAME || "guest",
+  password: process.env.RABBITMQ_PASSWORD || "guest",
   exchange: "webhook_exchange",
   queueBackendCore: "backend_core_queue",
   queueTestRunner: "test_runner_queue",
@@ -14,7 +17,13 @@ let channel: amqp.Channel | null = null;
 
 export async function setupRabbitMQ() {
   try {
-    connection = await amqp.connect(rabbitMQConfig.url);
+    connection = await amqp.connect({
+      protocol: "amqp",
+      hostname: rabbitMQConfig.hostname,
+      port: rabbitMQConfig.port,
+      username: rabbitMQConfig.username,
+      password: rabbitMQConfig.password,
+    });
     channel = await connection.createChannel();
 
     await channel.assertExchange(rabbitMQConfig.exchange, "topic", {
